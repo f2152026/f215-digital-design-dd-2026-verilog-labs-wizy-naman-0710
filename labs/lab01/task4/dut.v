@@ -4,6 +4,9 @@
 // run tb.v, then switch to a different implementation and repeat -- this
 // lets you compare rca64.v, cla64_flat.v, and cla64_blocked.v using the
 // exact same testbench and stimulus each time.
+//
+// Same wrapper trick as Task 3, one level bigger: only the module name on
+// the U_IMPL line changes between runs.
 
 module dut(
   input  [63:0] a,

@@ -25,6 +25,29 @@ module rca64(
   output        cout
 );
 
-  // TODO: your 64-bit ripple-carry structure goes here.
+  // carry[k] is the carry going INTO bit k, so carry[0] is the external
+  // carry-in and carry[64] is the carry-out of the whole adder.
+  wire [64:0] carry;
+
+  assign carry[0] = cin;
+
+  // Every stage is structurally identical here -- unlike the flat CLA's
+  // carry equations -- so one generate-for loop covers all 64 of them.
+  // k is a genvar: it only exists at elaboration time, and leaves no
+  // signal of its own behind in the circuit.
+  genvar k;
+  generate
+    for (k = 0; k < 64; k = k + 1) begin : fa_chain
+      FA_Gate FA (
+        .a    (a[k]),
+        .b    (b[k]),
+        .cin  (carry[k]),
+        .sum  (sum[k]),
+        .cout (carry[k+1])
+      );
+    end
+  endgenerate
+
+  assign cout = carry[64];
 
 endmodule
