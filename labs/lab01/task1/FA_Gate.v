@@ -6,6 +6,10 @@
 // Part (b): AFTER completing part (a), come back and reorder the five gate
 //           instantiations below into any different sequence, then
 //           re-simulate with the same tb.v and compare.
+//
+// The order below is the part (b) shuffle: the final OR is written first
+// and the half-adder XOR that everything else depends on is written last,
+// i.e. as close to "backwards" as the five gates can be listed.
 
 module FA_Gate(
   input  a,
@@ -16,10 +20,10 @@ module FA_Gate(
 );
   wire ps, pc1, pc2;
 
-  xor (ps,  a,   b);
-  and (pc1, a,   b);
-  xor (sum, cin, ps);
-  and (pc2, cin, ps);
   or  (cout, pc1, pc2);
+  xor (sum,  cin, ps);
+  and (pc2,  cin, ps);
+  and (pc1,  a,   b);
+  xor (ps,   a,   b);
 
 endmodule

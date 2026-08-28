@@ -4,6 +4,9 @@
 // run tb.v, then switch to a different implementation and repeat -- this
 // lets you compare rca.v, cla4.v, and cla4_dataflow.v using the exact same
 // testbench and stimulus each time.
+//
+// All three share the identical port list, so only the module name on the
+// U_IMPL line ever changes.
 
 module dut(
   input  [3:0] a,
